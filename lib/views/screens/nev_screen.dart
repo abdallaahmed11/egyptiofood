@@ -7,6 +7,8 @@ import 'package:egyption_foods/views/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'Aichat_screen.dart';
+
 class NavScreen extends GetWidget<HomeController> {
   const NavScreen({super.key});
 
@@ -41,6 +43,16 @@ class NavScreen extends GetWidget<HomeController> {
                           ),
                         ),
                         10.gap,
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => GeminiChatScreen()), // فتح الشاشة بدون Get
+                            );
+                          },
+                          icon: Icon(Icons.chat_bubble),
+                        )
+
                       ],
                     ),
                   ],

@@ -15,6 +15,7 @@ class HomeScreen extends GetWidget<HomeController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: EdgeInsets.only(bottom: 20),
       child: Column(
         children: [
           Padding(
@@ -55,88 +56,101 @@ class HomeScreen extends GetWidget<HomeController> {
               ),
             ),
           ),
-          CarouselSlider.builder(
-            itemCount: controller.recommendedFoodsList.length,
-            options: CarouselOptions(
-              scrollPhysics: const BouncingScrollPhysics(),
-              height: 150,
-              autoPlay: true,
-              viewportFraction: 0.8,
-              enableInfiniteScroll: true,
-              enlargeCenterPage: true,
-              pageSnapping: true,
-              autoPlayCurve: Curves.easeIn,
-            ),
-            itemBuilder: (_, int index, __) {
-              FoodModel food = controller.recommendedFoodsList[index];
-              return Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: InkWell(
-                  onTap: () => Get.toNamed(AppStrings.detailsRoute, arguments: food),
-                  child: Container(
-                    padding: 10.edgeInsetsAll,
-                    width: double.infinity,
-                    decoration: BoxDecoration(color: AppColors.lightBlueColor, borderRadius: 15.borderRadiusAll),
-                    child: Row(
-                      children: [
-                        Expanded(flex: 0, child: Image.network(food.image, width: 100)),
-                        10.gap,
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(food.title, style: TextStyle(fontSize: 18, color: AppColors.titlesColor)),
-                              Text(food.subTitle, style: TextStyle(color: AppColors.lightParchmentToneColor)),
-                              Text(AppStrings.boughtByText + AppStrings.spaceSign + food.selled.toString(), style: TextStyle(color: AppColors.lightParchmentToneColor)),
-                              Row(
+
+          Obx(() {
+            if (controller.isLoading.value) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (controller.recommendedFoodsList.isEmpty) {
+              return Center(
+                child: Text('No data available', style: TextStyle(color: Colors.grey)),
+              );
+            } else {
+              return CarouselSlider.builder(
+                itemCount: controller.recommendedFoodsList.length,
+                options: CarouselOptions(
+                  scrollPhysics: const BouncingScrollPhysics(),
+                  height: 170,
+                  autoPlay: true,
+                  viewportFraction: 0.8,
+                  enableInfiniteScroll: true,
+                  enlargeCenterPage: true,
+                  pageSnapping: true,
+                  autoPlayCurve: Curves.easeIn,
+                ),
+                itemBuilder: (_, int index, __) {
+                  FoodModel food = controller.recommendedFoodsList[index];
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                    child: InkWell(
+                      onTap: () => Get.toNamed(AppStrings.detailsRoute, arguments: food),
+                      child: Container(
+                        padding: 10.edgeInsetsAll,
+                        width: double.infinity,
+                        decoration: BoxDecoration(color: AppColors.lightBlueColor, borderRadius: 15.borderRadiusAll),
+                        child: Row(
+                          children: [
+                            Expanded(flex: 0, child: Image.network(food.image, width: 100)),
+                            10.gap,
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(food.rate >= 1 ? Icons.star_rounded : Icons.star_half_rounded, color: AppColors.goldColor),
-                                  Icon(
-                                    food.rate <= 1.1
-                                        ? Icons.star_border_rounded
-                                        : food.rate >= 2
-                                        ? Icons.star_rounded
-                                        : Icons.star_half_rounded,
-                                    color: AppColors.goldColor,
+                                  Text(food.title, style: TextStyle(fontSize: 18, color: AppColors.titlesColor)),
+                                  Text(food.subTitle, style: TextStyle(color: AppColors.lightParchmentToneColor)),
+                                  Text(AppStrings.boughtByText + AppStrings.spaceSign + food.selled.toString(), style: TextStyle(color: AppColors.lightParchmentToneColor)),
+                                  Row(
+                                    children: [
+                                      Icon(food.rate >= 1 ? Icons.star_rounded : Icons.star_half_rounded, color: AppColors.goldColor),
+                                      Icon(
+                                        food.rate <= 1.1
+                                            ? Icons.star_border_rounded
+                                            : food.rate >= 2
+                                            ? Icons.star_rounded
+                                            : Icons.star_half_rounded,
+                                        color: AppColors.goldColor,
+                                      ),
+                                      Icon(
+                                        food.rate <= 2.1
+                                            ? Icons.star_border_rounded
+                                            : food.rate >= 3
+                                            ? Icons.star_rounded
+                                            : Icons.star_half_rounded,
+                                        color: AppColors.goldColor,
+                                      ),
+                                      Icon(
+                                        food.rate <= 3.1
+                                            ? Icons.star_border_rounded
+                                            : food.rate >= 4
+                                            ? Icons.star_rounded
+                                            : Icons.star_half_rounded,
+                                        color: AppColors.goldColor,
+                                      ),
+                                      Icon(
+                                        food.rate <= 4.1
+                                            ? Icons.star_border_rounded
+                                            : food.rate >= 5
+                                            ? Icons.star_rounded
+                                            : Icons.star_half_rounded,
+                                        color: AppColors.goldColor,
+                                      ),
+                                      Text(AppStrings.spaceSign + food.rate.toDouble().toString(), style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.lightParchmentToneColor)),
+                                    ],
                                   ),
-                                  Icon(
-                                    food.rate <= 2.1
-                                        ? Icons.star_border_rounded
-                                        : food.rate >= 3
-                                        ? Icons.star_rounded
-                                        : Icons.star_half_rounded,
-                                    color: AppColors.goldColor,
-                                  ),
-                                  Icon(
-                                    food.rate <= 3.1
-                                        ? Icons.star_border_rounded
-                                        : food.rate >= 4
-                                        ? Icons.star_rounded
-                                        : Icons.star_half_rounded,
-                                    color: AppColors.goldColor,
-                                  ),
-                                  Icon(
-                                    food.rate <= 4.1
-                                        ? Icons.star_border_rounded
-                                        : food.rate >= 5
-                                        ? Icons.star_rounded
-                                        : Icons.star_half_rounded,
-                                    color: AppColors.goldColor,
-                                  ),
-                                  Text(AppStrings.spaceSign + food.rate.toDouble().toString(), style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.lightParchmentToneColor)),
                                 ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                },
               );
-            },
-          ),
+            }
+          }),
           10.gap,
           SizedBox(
             height: 30,

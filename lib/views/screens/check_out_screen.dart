@@ -3,6 +3,7 @@ import 'package:egyption_foods/constants/extensions.dart';
 import 'package:egyption_foods/constants/strings.dart';
 import 'package:egyption_foods/controllers/home_controller.dart';
 import 'package:egyption_foods/models/food_model.dart';
+import 'package:egyption_foods/views/screens/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -115,8 +116,67 @@ class CheckOutScreen extends GetWidget<HomeController> {
                 10.gap,
                 InkWell(
                   onTap: () {
-                    AppStrings.sorryThisFeatureIsNotAvailableYetToast.showToast;
+                    final nameController = TextEditingController();
+                    final phoneController = TextEditingController();
+                    final addressController = TextEditingController();
+
+                    Get.bottomSheet(
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('معلومات التوصيل', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            SizedBox(height: 10),
+                            TextField(
+                              controller: nameController,
+                              decoration: InputDecoration(labelText: 'اسم العميل'),
+                            ),
+                            SizedBox(height: 10),
+                            TextField(
+                              controller: phoneController,
+                              decoration: InputDecoration(labelText: 'رقم الهاتف'),
+                              keyboardType: TextInputType.phone,
+                            ),
+                            SizedBox(height: 10),
+                            TextField(
+                              controller: addressController,
+                              decoration: InputDecoration(labelText: 'العنوان'),
+                            ),
+                            SizedBox(height: 20),
+                            ElevatedButton(
+                              onPressed: () {
+                                final name = nameController.text.trim();
+                                final phone = phoneController.text.trim();
+                                final address = addressController.text.trim();
+
+                                if (name.isEmpty || phone.isEmpty || address.isEmpty) {
+                                  Get.snackbar(
+                                    'خطأ',
+                                    'من فضلك املى كل البيانات المطلوبة',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    backgroundColor: Colors.red.shade100,
+                                    colorText: Colors.black,
+                                    duration: Duration(seconds: 3),
+                                  );
+                                } else {
+                                  Get.back(); // اقفل bottom sheet
+                                  Get.to(() => Payment()); // روح على الدفع
+                                }
+                              },
+                              child: Text('متابعة للدفع'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      isScrollControlled: true,
+                    );
                   },
+
                   child: Container(
                     alignment: Alignment.center,
                     padding: 10.edgeInsetsAll,

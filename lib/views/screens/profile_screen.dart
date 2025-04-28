@@ -16,7 +16,7 @@ class ProfileScreen extends GetWidget<HomeController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: 10.edgeInsetsHorizontal,
+      padding: EdgeInsets.only(bottom: 30,right: 10,left: 10,top:10 ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
