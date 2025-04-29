@@ -245,7 +245,8 @@ class DetailsScreen extends StatelessWidget {
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('ضيف المنتج ده للكارت الأول قبل ما تكمل الشراء'),
+                              content: Text('Add this product in card .'),
+
                               duration: Duration(seconds: 2),
                               backgroundColor: Colors.red,
                             ),

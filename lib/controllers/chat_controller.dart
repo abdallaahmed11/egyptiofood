@@ -25,8 +25,9 @@ class GeminiChatController extends GetxController {
             {
               "parts": [
                 {
-                  "text":
-                  "انت مساعد متخصص في الأكل فقط. تجاوب بس على الأسئلة اللي ليها علاقة بالأكل أو الوصفات أو التغذية. لو السؤال ملوش علاقة بالأكل قله إنك متخصص أكل ومش هترد على ده.\n\nالسؤال: $userMessage"
+                  "text": "انت مساعد متخصص في الأكل فقط. تجاوب على الأسئلة اللي ليها علاقة بالأكل أو التغذية سواء بالعربي أو بالانجليزي. لو السؤال مش عن الأكل قول انك متخصص أكل بس.\n\nYou are a food assistant. Answer only food-related or nutrition questions, in the same language of the user message.\n\nالسؤال: $userMessage"
+
+
                 }
               ]
             }

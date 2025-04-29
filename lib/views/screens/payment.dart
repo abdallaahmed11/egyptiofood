@@ -1,5 +1,7 @@
+import 'package:egyption_foods/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../constants/strings.dart';
 import '../../controllers/payment_controller.dart';
 
 // شاشة الدفع
@@ -12,25 +14,32 @@ class Payment extends StatelessWidget {
     final PaymentController controller = Get.put(PaymentController());
 
     return Scaffold(
-      appBar: AppBar(title: Text('اختر طريقة الدفع')),
-      body: Padding(
+      backgroundColor: AppColors.lightBlueColor,
+
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: AppColors.lightParchmentToneColor),
+        title: Text('Foods Chatbot',style: TextStyle(color: AppColors.lightParchmentToneColor),),
+        actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.more_vert)),
+
+        ],),      body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
 
             // عرض الخيارات باستخدام RadioListTile
             paymentOption('Cash on Delivery', 'cash', controller, 'assets/images/logo.png',),
-            paymentOption('Credit / Debit Card', 'card', controller, 'assets/credit_card.png'),
-            paymentOption('Vodafone Cash', 'vodafone', controller, 'assets/vodafone_cash.png'),
-            paymentOption('PayPal', 'paypal', controller, 'assets/paypal.png'),
+            paymentOption('Credit / Debit Card', 'card', controller, 'assets/images/credit.png'),
+            paymentOption('Vodafone Cash', 'vodafone', controller, 'assets/images/vodafone.png'),
+            paymentOption('PayPal', 'paypal', controller, 'assets/images/paypal.png'),
             SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 // هنا ستتم عملية الدفع
                 controller.proceedToPayment(); // تنفيذ الدفع
-                _processPayment(context); // محاكاة إتمام الدفع وعرض الرسالة
+                // محاكاة إتمام الدفع وعرض الرسالة
               },
-              child: Text('متابعة'),
+              child: Text('Next process'),
             ),
           ],
         ),
@@ -39,14 +48,15 @@ class Payment extends StatelessWidget {
   }
 
   // طريقة الدفع
-  Widget paymentOption(String title, String value, PaymentController controller, String imagePath) {
+  Widget paymentOption(String title, String value, PaymentController controller, String imagePath,) {
     return Obx(() {
       return RadioListTile(
         title: Row(
           children: [
-            Image.asset(imagePath, width: 30, height: 30), // إضافة الصورة
+            Image.asset(imagePath, width: 50, height: 30), // إضافة الصورة
             SizedBox(width: 10),
-            Text(title),
+            Text(title,style: TextStyle(color: Colors.white),),
+
           ],
         ),
         value: value,
@@ -59,208 +69,359 @@ class Payment extends StatelessWidget {
   }
 
   // محاكاة عملية الدفع وعرض الرسالة
-  void _processPayment(BuildContext context) {
-    // محاكاة إتمام الدفع بعد 3 ثواني (يمكنك تغييره بناءً على وقت الدفع الفعلي)
-    Future.delayed(Duration(seconds: 3), () {
-      // الرسالة الأولى بعد الدفع
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Row(
-            children: [
-              Icon(Icons.delivery_dining, color: Colors.green), // أيقونة دليفري
-              SizedBox(width: 10),
-              Text('Coming Soon...'),
-            ],
-          ),
-          duration: Duration(seconds: 5), // الرسالة تظهر لمدة 5 ثواني
-        ),
-      );
 
-      // بعد 5 دقائق (300 ثانية) يتم تغيير الرسالة
-      Future.delayed(Duration(seconds: 300), () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Row(
-              children: [
-                Icon(Icons.check_circle, color: Colors.green), // أيقونة تم الإتمام
-                SizedBox(width: 10),
-                Text('Order Completed'),
-              ],
-            ),
-            duration: Duration(seconds: 3), // الرسالة تظهر لمدة 3 ثواني
-          ),
-        );
-      });
-    });
-  }
 }
 
 // شاشات الدفع المتنوعة
-class CashOnDeliveryScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('الدفع عند الاستلام')),
-      body: Center(child: Text('تم اختيار الدفع عند الاستلام')),
-    );
-  }
-}
+
 
 class CreditCardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('الدفع بالبطاقة')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'رقم البطاقة',
-                hintText: 'أدخل رقم البطاقة',
-                border: OutlineInputBorder(),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text('Card payment', style: TextStyle(color: Colors.black)),
+        iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
+        elevation: 1,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/Visa1.png', width: 70),
+                  SizedBox(width: 10),
+                  Image.asset('assets/images/mastercard.png', width: 50),
+                  SizedBox(width: 10),
+                ],
               ),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'تاريخ الانتهاء',
-                hintText: 'MM/YY',
-                border: OutlineInputBorder(),
+              SizedBox(height: 30),
+              buildTextField(label: 'Number of card', hint: '0xxxxxx'),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: buildTextField(label: 'Expiration date', hint: 'MM/YY'),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: buildTextField(label: ' (CVV)', hint: 'CVV', obscureText: true),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'رمز الأمان (CVV)',
-                hintText: 'أدخل رمز الأمان',
-                border: OutlineInputBorder(),
+              SizedBox(height: 16),
+              buildTextField(label: "Cardholder's name", hint: 'Type your name on the card'),
+              SizedBox(height: 30),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF1565C0),
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                ),
+                onPressed: () {
+                  Get.snackbar(
+                    'Delivery',
+                    'Your delivery is coming now!',
+                    backgroundColor: Color(0xFFE0F7FA),
+                    colorText: Colors.black,
+                    icon: Icon(Icons.delivery_dining, color: Colors.green),
+                    snackPosition: SnackPosition.TOP,
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    duration: Duration(seconds: 3),
+                  );
+
+                  Future.delayed(Duration(seconds: 2), () {
+                    Get.offNamed(AppStrings.homeRoute);
+                    // غير HomeScreen دي بالصفحة الرئيسية عندك
+                  });
+                },
+
+                child: Text('Complete payment', style: TextStyle(fontSize: 18,color: Colors.white)),
               ),
-              obscureText: true,
-            ),
-            SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                // هنا تقدر تبعت بيانات البطاقة للباك اند
-              },
-              child: Text('إتمام الدفع'),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
+
+  Widget buildTextField({required String label, required String hint, bool obscureText = false}) {
+    return TextField(
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+    );
+  }
 }
+
+
+
 
 class VodafoneCashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Vodafone Cash')),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Text('Vodafone Cash Payment'),
+        backgroundColor: Colors.red, // اللون الأحمر المشهور لفودافون
+        centerTitle: true,
+        elevation: 0,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Image.asset(
+              'assets/images/vodafone.png', // حط اللوجو هنا
+              height: 30,
+            ),
+          ),
+        ],
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'رقم فودافون كاش',
-                hintText: 'أدخل رقم فودافون كاش',
-                border: OutlineInputBorder(),
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // العنوان الرئيسي
+              Text(
+                'Complete Your Payment with Vodafone Cash',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red, // استخدام اللون الأحمر لفودافون
+                ),
               ),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'المبلغ المطلوب',
-                hintText: 'أدخل المبلغ',
-                border: OutlineInputBorder(),
+              SizedBox(height: 20),
+
+              // رقم فودافون كاش
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Vodafone Cash Number',
+                  hintText: 'Enter your Vodafone Cash number',
+                  prefixIcon: Icon(Icons.phone_android, color: Colors.red),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                ),
               ),
-            ),
-            SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                // هنا تقدر تبعت بيانات فودافون كاش للباك اند
-              },
-              child: Text('إتمام الدفع'),
-            ),
-          ],
+              SizedBox(height: 16),
+
+              // المبلغ المطلوب
+              TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'Amount to Pay',
+                  hintText: 'Enter the amount',
+                  prefixIcon: Icon(Icons.attach_money, color: Colors.red),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                ),
+              ),
+              SizedBox(height: 30),
+
+              // زر الدفع
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red, // لون الزر الأحمر
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                onPressed: () {
+                  Get.snackbar(
+                    'Delivery',
+                    'Your delivery is coming now!',
+                    backgroundColor: Color(0xFFE0F7FA),
+                    colorText: Colors.black,
+                    icon: Icon(Icons.delivery_dining, color: Colors.green),
+                    snackPosition: SnackPosition.TOP,
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    duration: Duration(seconds: 3),
+                  );
+
+                  Future.delayed(Duration(seconds: 2), () {
+                    Get.offNamed(AppStrings.homeRoute);
+                    // غير HomeScreen دي بالصفحة الرئيسية عندك
+                  });
+                },
+
+                child: Text(
+                  'Complete Payment',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
+              SizedBox(height: 20),
+
+              // رسالة توجيهية صغيرة بعد الدفع
+              Center(
+                child: Text(
+                  'Make sure to enter your Vodafone Cash number and the amount correctly.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey[600]),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
+
+
+
 class PaypalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('PayPal')),
+      backgroundColor: Colors.white,
+
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Text('PayPal Payment'),
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent, // لون PayPal الأساسي
+        elevation: 0,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(
+              'assets/images/paypal.png', // حط هنا اللوجو بتاعك
+              height: 30,
+            ),
+          ),
+        ],
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              'إدخال بيانات حساب PayPal',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'البريد الإلكتروني لحساب PayPal',
-                hintText: 'أدخل بريدك الإلكتروني هنا',
-                border: OutlineInputBorder(),
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Enter your PayPal account details',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueAccent,
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'رقم الهاتف المرتبط بحساب PayPal',
-                hintText: 'أدخل رقم الهاتف هنا',
-                border: OutlineInputBorder(),
+              SizedBox(height: 20),
+
+              // TextField للبريد الإلكتروني
+              TextField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  labelText: 'PayPal Email',
+                  hintText: 'Enter your PayPal email',
+                  prefixIcon: Icon(Icons.email, color: Colors.blueAccent),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                ),
               ),
-            ),
-            SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                // تنفيذ عملية الدفع أو التحويل إلى صفحة PayPal
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Text('تحويل إلى PayPal'),
-                      content: Text('سيتم تحويلك الآن إلى صفحة PayPal للدفع.'),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context); // اغلق النافذة المنبثقة
-                          },
-                          child: Text('إلغاء'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            // محاكاة تحويل إلى PayPal
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('تم تحويلك إلى PayPal')),
-                            );
-                          },
-                          child: Text('موافقة'),
-                        ),
-                      ],
+              SizedBox(height: 16),
+
+              // TextField لرقم الهاتف
+              TextField(
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  labelText: 'Phone Number',
+                  hintText: 'Enter your phone number',
+                  prefixIcon: Icon(Icons.phone, color: Colors.blueAccent),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                ),
+              ),
+              SizedBox(height: 30),
+
+              // زر متابعة الدفع
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Redirecting to PayPal'),
+                          content: Text('You will be redirected to PayPal to complete the payment.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Redirected to PayPal')),
+                                );
+                              },
+                              child: Text('Proceed'),
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
-                );
-              },
-              child: Text('متابعة إلى PayPal'),
-            ),
-            SizedBox(height: 30),
-            Center(
-              child: Image.asset('assets/paypal_logo.png', width: 150), // شعار PayPal
-            ),
-          ],
+                  child: Text(
+                    'Continue to PayPal',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+              ),
+              SizedBox(height: 40),
+
+              // اللوجو بتاع PayPal
+              Center(
+                child: Image.asset(
+                  'assets/images/paypal.png',
+                  width: 150,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
+
 }

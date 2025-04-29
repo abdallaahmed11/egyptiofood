@@ -86,6 +86,10 @@ class HomeController extends GetxController {
       totalTotalPrice += food.totalPrice;
     }
   }
+  // void getRecommendedFoodsList() {
+  //   foodsList.sort((a, b) => b.selled.compareTo(a.selled));
+  //   recommendedFoodsList = foodsList.take(5).toList();
+  // }
 
   // Function to fetch the recommended foods from the server based on filters
   Future<void> getRecommendedFoodsList({String? category, double? minPrice, double? maxPrice}) async {

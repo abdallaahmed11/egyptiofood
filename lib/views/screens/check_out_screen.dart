@@ -124,28 +124,41 @@ class CheckOutScreen extends GetWidget<HomeController> {
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color:AppColors.lightBlueColor,
                           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('معلومات التوصيل', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            Text('Delivery info', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white)),
                             SizedBox(height: 10),
                             TextField(
+                              style: TextStyle(color: AppColors.lightParchmentToneColor),
                               controller: nameController,
-                              decoration: InputDecoration(labelText: 'اسم العميل'),
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.person,color:AppColors.lightParchmentToneColor ,),
+                                  labelStyle: TextStyle(color:  AppColors.lightParchmentToneColor),
+                                  label: Text("Name"),
+                              ),
                             ),
                             SizedBox(height: 10),
                             TextField(
+                              style: TextStyle(color: AppColors.lightParchmentToneColor),
                               controller: phoneController,
-                              decoration: InputDecoration(labelText: 'رقم الهاتف'),
-                              keyboardType: TextInputType.phone,
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.phone,color: AppColors.lightParchmentToneColor,),
+                                  labelStyle: TextStyle(color: AppColors.lightParchmentToneColor),
+                                  label: Text("Phone Number")),
                             ),
                             SizedBox(height: 10),
                             TextField(
+                              
+                              style: TextStyle(color: AppColors.lightParchmentToneColor),
                               controller: addressController,
-                              decoration: InputDecoration(labelText: 'العنوان'),
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.location_pin,color: AppColors.lightParchmentToneColor,),
+                                  labelStyle: TextStyle(color:  AppColors.lightParchmentToneColor),
+                                  label: Text("Location your address")),
                             ),
                             SizedBox(height: 20),
                             ElevatedButton(
@@ -156,11 +169,13 @@ class CheckOutScreen extends GetWidget<HomeController> {
 
                                 if (name.isEmpty || phone.isEmpty || address.isEmpty) {
                                   Get.snackbar(
-                                    'خطأ',
-                                    'من فضلك املى كل البيانات المطلوبة',
-                                    snackPosition: SnackPosition.BOTTOM,
+                                    'error',
+                                    'Please fill in all required information.',
+                                    snackPosition: SnackPosition.TOP,
                                     backgroundColor: Colors.red.shade100,
                                     colorText: Colors.black,
+                                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+
                                     duration: Duration(seconds: 3),
                                   );
                                 } else {
@@ -168,7 +183,7 @@ class CheckOutScreen extends GetWidget<HomeController> {
                                   Get.to(() => Payment()); // روح على الدفع
                                 }
                               },
-                              child: Text('متابعة للدفع'),
+                              child: Text('Proceed payment',style: TextStyle(color: AppColors.lightBlueColor),),
                             ),
                           ],
                         ),

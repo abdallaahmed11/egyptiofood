@@ -1,5 +1,6 @@
 import 'package:egyption_foods/constants/strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -73,6 +74,8 @@ class FirebaseAuthService {
   Future<String> signOut() async {
     try {
       await _firebaseAuth.signOut();
+      await GoogleSignIn().disconnect();
+
       return AppStrings.signedOutText;
     } on FirebaseAuthException catch (error) {
       if (error.code == AppStrings.networkRequestFailedErrorCode) {

@@ -6,6 +6,8 @@ import 'package:egyption_foods/views/widgets/form_field_widget.dart';
 import 'package:egyption_foods/views/widgets/hero_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends GetWidget<LoginController> {
   const LoginScreen({super.key});
@@ -22,7 +24,11 @@ class LoginScreen extends GetWidget<LoginController> {
               tag: AppStrings.hieroglyphicTag,
               child: Padding(
                 padding: 25.edgeInsetsHorizontal,
-                child: Text(AppStrings.loginHieroglyphicText, textAlign: TextAlign.center, style: TextStyle(color: AppColors.titlesColor, fontSize: 20)),
+                child: Text(
+                  AppStrings.loginHieroglyphicText,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: AppColors.titlesColor, fontSize: 20),
+                ),
               ),
             ),
             SafeArea(
@@ -37,16 +43,40 @@ class LoginScreen extends GetWidget<LoginController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Hero(tag: AppStrings.logoTag, child: Center(child: Image.asset(AppStrings.logoImage, height: 150, width: 150))),
+                          Hero(
+                            tag: AppStrings.logoTag,
+                            child: Center(
+                              child: Image.asset(
+                                AppStrings.logoImage,
+                                height: 150,
+                                width: 150,
+                              ),
+                            ),
+                          ),
                           10.gap,
                           const HeroWidget(
                             tag: AppStrings.titleTag,
-                            child: Text(AppStrings.appTitle, textAlign: TextAlign.center, style: TextStyle(fontSize: 40, fontFamily: AppStrings.timesFont, color: AppColors.titlesColor)),
+                            child: Text(
+                              AppStrings.appTitle,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
+                                fontFamily: AppStrings.timesFont,
+                                color: AppColors.titlesColor,
+                              ),
+                            ),
                           ),
                           20.gap,
                           const HeroWidget(
                             tag: AppStrings.subTitleTag,
-                            child: Text(AppStrings.loginText, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.lightParchmentToneColor)),
+                            child: Text(
+                              AppStrings.loginText,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.lightParchmentToneColor,
+                              ),
+                            ),
                           ),
                           10.gap,
                           HeroWidget(
@@ -64,11 +94,20 @@ class LoginScreen extends GetWidget<LoginController> {
                               },
                               validator: (String? value) {
                                 if (value == null || value.isEmpty) {
-                                  return AppStrings.emailText + AppStrings.spaceSign + AppStrings.isRequiredValidation;
-                                } else if (!RegExp(r"^[^@.]$").hasMatch(value[0]) || !RegExp(r"^[^@.]$").hasMatch(value[value.length - 1]) || RegExp(r'[^\w@.]').hasMatch(value)) {
+                                  return AppStrings.emailText +
+                                      AppStrings.spaceSign +
+                                      AppStrings.isRequiredValidation;
+                                } else if (!RegExp(
+                                      r"^[^@.]$",
+                                    ).hasMatch(value[0]) ||
+                                    !RegExp(
+                                      r"^[^@.]$",
+                                    ).hasMatch(value[value.length - 1]) ||
+                                    RegExp(r'[^\w@.]').hasMatch(value)) {
                                   return AppStrings.invalidEmailValidation;
                                 } else if (!value.contains(AppStrings.atSign)) {
-                                  return AppStrings.emailDoesNotContainAtValidation;
+                                  return AppStrings
+                                      .emailDoesNotContainAtValidation;
                                 }
                                 return null;
                               },
@@ -89,7 +128,11 @@ class LoginScreen extends GetWidget<LoginController> {
                                       controller.obscure = !controller.obscure;
                                       controller.update();
                                     },
-                                    child: Icon(controller.obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined),
+                                    child: Icon(
+                                      controller.obscure
+                                          ? Icons.visibility_off_outlined
+                                          : Icons.visibility_outlined,
+                                    ),
                                   ),
                                   onSaved: (String? value) {
                                     controller.password = value!.trim();
@@ -100,11 +143,17 @@ class LoginScreen extends GetWidget<LoginController> {
                                   },
                                   validator: (String? value) {
                                     if (value == null || value.isEmpty) {
-                                      return AppStrings.passwordText + AppStrings.spaceSign + AppStrings.isRequiredValidation;
+                                      return AppStrings.passwordText +
+                                          AppStrings.spaceSign +
+                                          AppStrings.isRequiredValidation;
                                     } else if (value.length < 8) {
-                                      return AppStrings.passwordText + AppStrings.spaceSign + AppStrings.lessThen8Validation;
+                                      return AppStrings.passwordText +
+                                          AppStrings.spaceSign +
+                                          AppStrings.lessThen8Validation;
                                     } else if (value.length > 24) {
-                                      return AppStrings.passwordText + AppStrings.spaceSign + AppStrings.largerThen24Validation;
+                                      return AppStrings.passwordText +
+                                          AppStrings.spaceSign +
+                                          AppStrings.largerThen24Validation;
                                     }
                                     return null;
                                   },
@@ -114,11 +163,18 @@ class LoginScreen extends GetWidget<LoginController> {
                           ),
                           5.gap,
                           InkWell(
-                            onTap: () => Get.offNamed(AppStrings.resetPasswordRoute),
+                            onTap:
+                                () =>
+                                    Get.offNamed(AppStrings.resetPasswordRoute),
                             child: const Text(
-                              AppStrings.resetPasswordText + AppStrings.questionSign,
+                              AppStrings.resetPasswordText +
+                                  AppStrings.questionSign,
                               textAlign: TextAlign.end,
-                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.lightParchmentToneColor),
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.lightParchmentToneColor,
+                              ),
                             ),
                           ),
                           20.gap,
@@ -128,21 +184,62 @@ class LoginScreen extends GetWidget<LoginController> {
                               child: GetBuilder<LoginController>(
                                 builder: (_) {
                                   return InkWell(
-                                    onTap: controller.isLoading ? () {} : controller.login,
+                                    onTap:
+                                        controller.isLoading
+                                            ? () {}
+                                            : controller.login,
                                     child: Container(
                                       height: 50,
                                       width: 200,
                                       alignment: Alignment.center,
-                                      decoration: BoxDecoration(borderRadius: 15.borderRadiusAll, border: Border.all(color: AppColors.lightParchmentToneColor)),
+                                      decoration: BoxDecoration(
+                                        borderRadius: 15.borderRadiusAll,
+                                        border: Border.all(
+                                          color:
+                                              AppColors.lightParchmentToneColor,
+                                        ),
+                                      ),
                                       child:
                                           controller.isLoading
                                               ? 30.lightLoading
-                                              : const Text(AppStrings.loginText, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.lightParchmentToneColor)),
+                                              : const Text(
+                                                AppStrings.loginText,
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color:
+                                                      AppColors
+                                                          .lightParchmentToneColor,
+                                                ),
+                                              ),
                                     ),
                                   );
                                 },
                               ),
                             ),
+                          ),
+                          20.gap,
+                          Container(
+                            child: Text(
+                              "Or Login With",
+                              style: TextStyle(color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                onPressed: ()  async{
+                                  await controller.signInWithGoogle();
+                                },
+                                icon: Image.asset("assets/images/google.png"),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Image.asset("assets/images/facebook.png"),
+                              ),
+                            ],
                           ),
                           10.gap,
                           HeroWidget(
@@ -150,15 +247,29 @@ class LoginScreen extends GetWidget<LoginController> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text(AppStrings.doNotHaveAnAccountText, style: TextStyle(fontSize: 16, color: AppColors.lightParchmentToneColor)),
+                                const Text(
+                                  AppStrings.doNotHaveAnAccountText,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: AppColors.lightParchmentToneColor,
+                                  ),
+                                ),
                                 InkWell(
-                                  onTap: () => Get.offNamed(AppStrings.signupRoute),
+                                  onTap:
+                                      () =>
+                                          Get.offNamed(AppStrings.signupRoute),
                                   child: Container(
                                     padding: 8.edgeInsetsAll,
                                     alignment: Alignment.center,
                                     child: const Text(
-                                      AppStrings.signUpText + AppStrings.questionSign,
-                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.lightParchmentToneColor),
+                                      AppStrings.signUpText +
+                                          AppStrings.questionSign,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color:
+                                            AppColors.lightParchmentToneColor,
+                                      ),
                                     ),
                                   ),
                                 ),

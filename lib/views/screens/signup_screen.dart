@@ -151,6 +151,10 @@ class SignUpScreen extends GetWidget<SignUpController> {
                             ),
                           ),
                         ),
+                        20.gap,
+                        Container(child:Text("Or Sign Up With",style: TextStyle(color: Colors.white),textAlign: TextAlign.center,) ,),
+                        Row(mainAxisAlignment: MainAxisAlignment.center,
+                          children: [IconButton(onPressed: (){}, icon: Image.asset("assets/images/google.png")),IconButton(onPressed: (){}, icon: Image.asset("assets/images/facebook.png"))],),
                         10.gap,
                         HeroWidget(
                           tag: AppStrings.textButtonTag,

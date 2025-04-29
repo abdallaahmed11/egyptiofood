@@ -50,7 +50,7 @@ class NavScreen extends GetWidget<HomeController> {
                               MaterialPageRoute(builder: (context) => GeminiChatScreen()), // فتح الشاشة بدون Get
                             );
                           },
-                          icon: Icon(Icons.chat_bubble),
+                          icon: Image.asset("assets/images/chat.png"),
                         )
 
                       ],
