@@ -12,7 +12,20 @@
           "package_name": "com.example.egyption_foods"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "656786692910-9jialftsaog0dtk0tfhhs4nlm39jsq8h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.egyption_foods",
+            "certificate_hash": "50cfbf4b92d80751c1db0053aa2acb08c37b2644"
+          }
+        },
+        {
+          "client_id": "656786692910-8gf7uo72ghjmnu9aarrumb6fh7p04v0s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCaId_bDxK8s0l8PYrReDGFAnzZKaGZOG0"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "656786692910-8gf7uo72ghjmnu9aarrumb6fh7p04v0s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "656786692910-c9km63rirtrr34jkms6799ehncef98u5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.egyptionFoods"
+              }
+            }
+          ]
         }
       }
     }

@@ -1,5 +1,7 @@
 import 'package:egyption_foods/constants/strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthService {
@@ -71,19 +73,26 @@ class FirebaseAuthService {
   }
 
   /// To sign out from the current account.
-  Future<String> signOut() async {
+  Future<void> signOut() async {
     try {
-      await _firebaseAuth.signOut();
+      // تسجيل الخروج من Firebase
+      await FirebaseAuth.instance.signOut();
       await GoogleSignIn().disconnect();
 
-      return AppStrings.signedOutText;
-    } on FirebaseAuthException catch (error) {
-      if (error.code == AppStrings.networkRequestFailedErrorCode) {
-        return AppStrings.pleaseCheckYourInternetConnectionToast;
-      }
-      return AppStrings.unknownErrorToast;
-    } catch (error) {
-      return error.toString();
+      // تسجيل الخروج من Google
+      await GoogleSignIn().signOut();
+
+      // مسح بيانات الجلسة (لو عندك أي بيانات مستخدم أو معلومات في SharedPreferences أو غيره، امسحها هنا)
+      // ممكن تستخدم SharedPreferences أو GetX عشان تمسح بيانات المستخدم لو مخزنة
+
+      // إعادة توجيه المستخدم لصفحة تسجيل الدخول
+      Get.off(AppStrings.loginRoute); // توجيه لصفحة تسجيل الدخول
+      print('Sign-Out successful');
+    } catch (e) {
+      print('Sign-Out failed: $e');
+      Get.snackbar('Error', 'Failed to sign out. Please try again');
     }
   }
+
+
 }

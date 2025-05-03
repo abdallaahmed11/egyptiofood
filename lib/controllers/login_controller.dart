@@ -48,12 +48,13 @@ class LoginController extends GetxController {
     update();
   }
 
-  Future signInWithGoogle() async {
+  Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    Get.offNamed(AppStrings.splashRoute);
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
@@ -62,8 +63,8 @@ class LoginController extends GetxController {
     );
 
     // Once signed in, return the UserCredential
-     await FirebaseAuth.instance.signInWithCredential(credential);
-      Get.offNamed(AppStrings.homeRoute);
-
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
+
+
 }
