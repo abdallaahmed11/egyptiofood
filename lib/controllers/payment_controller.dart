@@ -1,8 +1,6 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../constants/strings.dart';
 import '../views/screens/payment.dart';
 
@@ -23,12 +21,11 @@ class PaymentController extends GetxController {
         icon: Icon(Icons.delivery_dining, color: Colors.green),
         snackPosition: SnackPosition.TOP,
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        duration: Duration(seconds: 2), // أو اي وقت تحبه
+        duration: Duration(seconds: 2),
       );
 
-      // بعد ما تظهر الرسالة يستنى ثانيتين وبعدها يحول
       Future.delayed(Duration(seconds: 2), () {
-        Get.offAllNamed(AppStrings.homeRoute);
+        Get.offAllNamed(AppStrings.splashRoute);
       });
 
     } else if (selectedMethod.value == 'card') {

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class GeminiChatController extends GetxController {
+class FoodChatbotController extends GetxController {
   final TextEditingController controller = TextEditingController();
   List<Map<String, String>> messages = [];
   bool isLoading = false;

@@ -6,11 +6,11 @@ import '../../controllers/chat_controller.dart';
 import '../widgets/chat_widget.dart';
 
 
-class GeminiChatScreen extends StatelessWidget {
+class FoodChatbot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GeminiChatController>(
-      init: GeminiChatController(),
+    return GetBuilder<FoodChatbotController>(
+      init: FoodChatbotController(),
       builder: (controller) {
         return Scaffold(
           backgroundColor: AppColors.lightBlueColor,
@@ -29,7 +29,7 @@ class GeminiChatScreen extends StatelessWidget {
                   image: AssetImage("assets/images/logo11.png"),
                   fit: BoxFit.fitWidth, // يخلي الصورة مغطية الشاشة كلها
                   colorFilter: ColorFilter.mode(
-                    AppColors.lightBlueColor.withOpacity(0.1), // هنا بقى التحكم في الشفافية
+                    AppColors.lightBlueColor.withOpacity(0.1), // التحكم في الشفافية
                     BlendMode.dstATop,
                   ),
                 ),
@@ -41,7 +41,7 @@ class GeminiChatScreen extends StatelessWidget {
                       itemCount: controller.messages.length,
                       itemBuilder: (context, index) {
                         final msg = controller.messages[index];
-                        return GeminiChatMessageWidget(
+                        return FoodChatMessageWidget(
                           text: msg['text']!,
                           isUser: msg['sender'] == 'user',
                         );

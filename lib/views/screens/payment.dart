@@ -4,13 +4,12 @@ import 'package:get/get.dart';
 import '../../constants/strings.dart';
 import '../../controllers/payment_controller.dart';
 
-// شاشة الدفع
 class Payment extends StatelessWidget {
   const Payment({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // ربط الـ Controller هنا باستخدام Get.put
+    // ربط الـ Controller  Get.put
     final PaymentController controller = Get.put(PaymentController());
 
     return Scaffold(
@@ -27,7 +26,7 @@ class Payment extends StatelessWidget {
         child: Column(
           children: [
 
-            // عرض الخيارات باستخدام RadioListTile
+            // RadioListTile
             paymentOption('Cash on Delivery', 'cash', controller, 'assets/images/logo.png',),
             paymentOption('Credit / Debit Card', 'card', controller, 'assets/images/credit.png'),
             paymentOption('Vodafone Cash', 'vodafone', controller, 'assets/images/vodafone.png'),
@@ -35,9 +34,9 @@ class Payment extends StatelessWidget {
             SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                // هنا ستتم عملية الدفع
-                controller.proceedToPayment(); // تنفيذ الدفع
-                // محاكاة إتمام الدفع وعرض الرسالة
+                // process payment
+                controller.proceedToPayment(); // complete payment
+                // Alert view
               },
               child: Text('Next process'),
             ),
@@ -47,7 +46,7 @@ class Payment extends StatelessWidget {
     );
   }
 
-  // طريقة الدفع
+  // option payment
   Widget paymentOption(String title, String value, PaymentController controller, String imagePath,) {
     return Obx(() {
       return RadioListTile(
@@ -60,7 +59,7 @@ class Payment extends StatelessWidget {
           ],
         ),
         value: value,
-        groupValue: controller.selectedMethod.value, // استخدام القيمة من الـ Controller
+        groupValue: controller.selectedMethod.value, // استخدام Value من الـ Controller
         onChanged: (val) {
           controller.updatePaymentMethod(val.toString());
         },
@@ -68,11 +67,11 @@ class Payment extends StatelessWidget {
     });
   }
 
-  // محاكاة عملية الدفع وعرض الرسالة
+  // Alert massege
 
 }
 
-// شاشات الدفع المتنوعة
+// multi screens payment
 
 
 class CreditCardScreen extends StatelessWidget {
@@ -138,8 +137,7 @@ class CreditCardScreen extends StatelessWidget {
                   );
 
                   Future.delayed(Duration(seconds: 2), () {
-                    Get.offNamed(AppStrings.homeRoute);
-                    // غير HomeScreen دي بالصفحة الرئيسية عندك
+                    Get.offNamed(AppStrings.splashRoute);
                   });
                 },
 
@@ -177,14 +175,14 @@ class VodafoneCashScreen extends StatelessWidget {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         title: Text('Vodafone Cash Payment'),
-        backgroundColor: Colors.red, // اللون الأحمر المشهور لفودافون
+        backgroundColor: Colors.red,
         centerTitle: true,
         elevation: 0,
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Image.asset(
-              'assets/images/vodafone.png', // حط اللوجو هنا
+              'assets/images/vodafone.png',
               height: 30,
             ),
           ),
@@ -196,18 +194,18 @@ class VodafoneCashScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // العنوان الرئيسي
+              // title
               Text(
                 'Complete Your Payment with Vodafone Cash',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.red, // استخدام اللون الأحمر لفودافون
+                  color: Colors.red,
                 ),
               ),
               SizedBox(height: 20),
 
-              // رقم فودافون كاش
+
               TextField(
                 decoration: InputDecoration(
                   labelText: 'Vodafone Cash Number',
@@ -223,7 +221,7 @@ class VodafoneCashScreen extends StatelessWidget {
               ),
               SizedBox(height: 16),
 
-              // المبلغ المطلوب
+
               TextField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -240,10 +238,9 @@ class VodafoneCashScreen extends StatelessWidget {
               ),
               SizedBox(height: 30),
 
-              // زر الدفع
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red, // لون الزر الأحمر
+                  backgroundColor: Colors.red,
                   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -262,8 +259,7 @@ class VodafoneCashScreen extends StatelessWidget {
                   );
 
                   Future.delayed(Duration(seconds: 2), () {
-                    Get.offNamed(AppStrings.homeRoute);
-                    // غير HomeScreen دي بالصفحة الرئيسية عندك
+                    Get.offNamed(AppStrings.splashRoute);
                   });
                 },
 
@@ -274,7 +270,6 @@ class VodafoneCashScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
 
-              // رسالة توجيهية صغيرة بعد الدفع
               Center(
                 child: Text(
                   'Make sure to enter your Vodafone Cash number and the amount correctly.',
@@ -303,13 +298,13 @@ class PaypalScreen extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.black),
         title: Text('PayPal Payment'),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent, // لون PayPal الأساسي
+        backgroundColor: Colors.blueAccent,
         elevation: 0,
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(
-              'assets/images/paypal.png', // حط هنا اللوجو بتاعك
+              'assets/images/paypal.png',
               height: 30,
             ),
           ),
@@ -331,7 +326,6 @@ class PaypalScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
 
-              // TextField للبريد الإلكتروني
               TextField(
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
@@ -347,7 +341,6 @@ class PaypalScreen extends StatelessWidget {
               ),
               SizedBox(height: 16),
 
-              // TextField لرقم الهاتف
               TextField(
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
@@ -363,7 +356,6 @@ class PaypalScreen extends StatelessWidget {
               ),
               SizedBox(height: 30),
 
-              // زر متابعة الدفع
               Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -409,7 +401,6 @@ class PaypalScreen extends StatelessWidget {
               ),
               SizedBox(height: 40),
 
-              // اللوجو بتاع PayPal
               Center(
                 child: Image.asset(
                   'assets/images/paypal.png',

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class GeminiChatMessageWidget extends StatelessWidget {
+class FoodChatMessageWidget extends StatelessWidget {
   final String text;
   final bool isUser;
 
-  const GeminiChatMessageWidget({
+  const FoodChatMessageWidget({
     Key? key,
     required this.text,
     required this.isUser,
@@ -16,7 +16,7 @@ class GeminiChatMessageWidget extends StatelessWidget {
         alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(
         constraints: BoxConstraints(
-        maxWidth: 300, // حدود عرض الرسالة متكبرش اكتر من كده زي الواتساب
+        maxWidth: 300, // The borders are not fixed like WhatsApp
     ),
     margin: EdgeInsets.symmetric(vertical: 4, horizontal: 2),
     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),

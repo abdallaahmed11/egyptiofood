@@ -25,6 +25,7 @@ dependencies:
   google_sign_in:
   flutter_facebook_auth:
   image_picker:
+  url_launcher:
 
 
 

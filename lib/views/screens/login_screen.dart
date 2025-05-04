@@ -236,7 +236,9 @@ class LoginScreen extends GetWidget<LoginController> {
                                 icon: Image.asset("assets/images/google.png"),
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+
+                                },
                                 icon: Image.asset("assets/images/facebook.png"),
                               ),
                             ],
